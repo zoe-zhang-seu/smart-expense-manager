@@ -10,7 +10,7 @@ export default function Login() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (username === "admin" && password === "123456") {
+    if (username.trim() === "admin" && password.trim() === "123456") {
       setError("");
       alert("Login successful!");
       navigate("/dashboard");
