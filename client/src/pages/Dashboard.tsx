@@ -1,4 +1,3 @@
-import { Header } from "../components/Header";
 import { Counter } from "./Calculator/Counter";
 import { UsersDashboard } from "./Users/UserDashboard";
 
