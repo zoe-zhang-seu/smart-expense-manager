@@ -29,7 +29,7 @@ export function UsersDashboard() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Users Dashboard</h2>
+      <h2 className="text-2xl font-bold mb-4">Users</h2>
       <table className="min-w-full bg-white border">
         <thead>
           <tr className="bg-gray-200">
@@ -45,7 +45,6 @@ export function UsersDashboard() {
               key={u.id}
               className="hover:bg-gray-100 cursor-pointer"
             >
-              {/* Wrap each cell in a Link, or the entire row */}
               <td className="px-4 py-2 border">
                 <Link to={`/users/${u.id}`}>{u.id}</Link>
               </td>

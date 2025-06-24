@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Button } from '../../components/Button';
 
 interface UserType {
   id: string;
@@ -12,7 +13,7 @@ export default function User() {
   const [user, setUser]       = useState<UserType>();
   const [error, setError]     = useState('');
   const [loading, setLoading] = useState(true);
- 
+  const navigate = useNavigate();
   //replace it wiht backend API call later
   useEffect(() => {
     setLoading(true);
@@ -47,6 +48,13 @@ export default function User() {
           <p><strong>Email:</strong> {user.email}</p>
         </>
       )}
+
+      <Button
+        onClick={() => navigate(-1)}    // ← go back one entry in history
+        className="mb-4 px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+      >
+        ← Back
+      </Button>
     </div>
   );
 }
