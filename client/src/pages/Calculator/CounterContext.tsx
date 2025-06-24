@@ -1,4 +1,4 @@
 
 import  { createContext } from 'react';
 export const CounterContext = createContext({count:0,increment:()=>{}});
-//shared variables 
+//shared state between components 
