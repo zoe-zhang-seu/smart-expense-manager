@@ -1,0 +1,43 @@
+# ----------------------
+# Build output
+# ----------------------
+/bin/
+/obj/
+
+# ----------------------
+# EF Core Migrations (optional)
+# ----------------------
+# Migrations/
+
+# ----------------------
+# Local database files
+# ----------------------
+*.db
+*.sqlite
+auth.db
+local.db
+
+# ----------------------
+# User secrets (if used)
+/secrets.json
+
+# ----------------------
+# IDE & editor settings
+# ----------------------
+.vscode/
+*.user
+*.suo
+.idea/
+
+# ----------------------
+# macOS files
+# ----------------------
+.DS_Store
+
+# ----------------------
+# Log files & publish output
+# ----------------------
+*.log
+publish/
+
+
