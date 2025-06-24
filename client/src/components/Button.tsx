@@ -4,6 +4,7 @@ interface IProps {
     children: React.ReactNode;
     variant?: 'primary' | 'secondary' | 'danger';
     className?: string;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 export function Button(props: IProps) {
     const {
