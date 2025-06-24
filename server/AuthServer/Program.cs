@@ -12,7 +12,8 @@ builder.Services.AddDbContext<AppDbContext>(opts =>
 );
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
-builder.Services.AddScoped<UserManager<User>>();
+
+
 
 builder.Services.AddControllers();
 // Add services to the container.
@@ -25,6 +26,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var hasher = scope.ServiceProvider.GetRequiredService<IPasswordHasher<User>>();
+
+        DbInitializer.Seed(db, hasher);
+    }
 }
 
 app.UseHttpsRedirection();
