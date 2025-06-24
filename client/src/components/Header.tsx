@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 
 export function Header({
-  title = 'My App',
+  title = 'Expense Manager',
   links = [
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/expenses',  label: 'Expenses' },
+    { to: '/users', label: 'Users' },
     { to: '/logout',  label: 'Logout' },
   ],
+
 }) {
   return (
     <header className="bg-white shadow-md">

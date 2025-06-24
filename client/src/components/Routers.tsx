@@ -4,6 +4,7 @@ import Dashboard from "../pages/Dashboard";
 import Expenses from "../pages/Expenses";
 import User from "../pages/Users/User";
 import { Layout } from "./Layout";
+import { UsersDashboard } from "../pages/Users/UserDashboard";
 
 export const Routers = () => {
   return (
@@ -14,6 +15,7 @@ export const Routers = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/expenses" element={<Expenses />} />
           <Route path="/users/:userId" element={<User />} />
+          <Route path="/users" element={<UsersDashboard />} />
         </Route>
       </Routes>
     </>

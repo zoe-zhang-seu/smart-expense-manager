@@ -12,6 +12,7 @@ export function Layout() {
         links={[
           { to: '/dashboard', label: 'Dashboard' },
           { to: '/expenses',  label: 'Expenses' },
+          { to: '/users', label: 'Users' },
           { to: '/logout',    label: 'Logout' },
         ]}
       />
