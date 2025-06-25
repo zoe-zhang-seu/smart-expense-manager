@@ -5,6 +5,7 @@ using AuthServer.Models;
 using Google.Protobuf.WellKnownTypes;     
 using Grpc.Core;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace AuthServer.Services
@@ -19,6 +20,7 @@ namespace AuthServer.Services
             _db = db;
         }
 
+        [HttpGet("api/users/listusers")]
         public override async Task<ListUsersResponse> ListUsers(Empty request, ServerCallContext context)
         {
             var users = await _db.Users.Include(u => u.Role).ToListAsync();
@@ -37,6 +39,7 @@ namespace AuthServer.Services
             return response;
         }
 
+        [HttpPost("/api/users/register")]
         public override async Task<AuthResponse> Register(RegisterRequest request, ServerCallContext context)
         {
             var existingUser = await _db.Users
@@ -68,8 +71,8 @@ namespace AuthServer.Services
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 IsActive = true,
-                RoleId = userRole.Id, 
-                PasswordHash = "hashed_password" 
+                RoleId = userRole.Id,
+                PasswordHash = "hashed_password"
             };
             var hasher = new PasswordHasher<Models.User>();
             user.PasswordHash = hasher.HashPassword(user, request.Password);
@@ -83,6 +86,8 @@ namespace AuthServer.Services
                 Error = "User registered successfully."
             };
         }
+
+        [HttpPost("/api/users/login")]
         public override async Task<AuthResponse> Login(LoginRequest request, ServerCallContext context)
         {
             var user = await _db.Users

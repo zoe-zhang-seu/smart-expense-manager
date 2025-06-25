@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { login } from "../services/LoginService";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -7,17 +8,31 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (username.trim() === "admin" && password.trim() === "123456") {
+    // try {
+    //   const res = await login({ username, password });
+    //   if (res.success) {
+    //     navigate("/dashboard");
+    //   } else {
+    //     setError(res.error || "Login failed");
+    //   }
+    // } catch (err) {
+    //   console.error(err);
+    //   setError("Network or server error");
+    // }
+
+     if (username.trim() === "admin" && password.trim() === "123456") {
       setError("");
       alert("Login successful!");
       navigate("/dashboard");
     } else {
       setError("Invalid username or password.");
-    }
+      }
   };
+
+   
 
   return (
     
