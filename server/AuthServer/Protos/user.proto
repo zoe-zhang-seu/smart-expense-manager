@@ -13,7 +13,7 @@ message UserMessage {
   string roleName  = 5;
 }
 
-service AuthService {
+service LoginService {
   rpc Register    (RegisterRequest)       returns (AuthResponse);
   rpc Login       (LoginRequest)       returns (AuthResponse);
   rpc ListUsers   (google.protobuf.Empty) returns (ListUsersResponse);

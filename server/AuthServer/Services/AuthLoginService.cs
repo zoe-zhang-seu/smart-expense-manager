@@ -9,12 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthServer.Services
 {
-    public class AuthLoginService : AuthService.AuthServiceBase
+    public class LoginService : AuthServer.Grpc.LoginService.LoginServiceBase
     {
         private readonly AppDbContext _db;
 
 
-        public AuthLoginService(AppDbContext db)
+        public LoginService(AppDbContext db)
         {
             _db = db;
         }
