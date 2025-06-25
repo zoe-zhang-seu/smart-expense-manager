@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+"codegen": "mkdir -p src/grpc && protoc -I=../server/AuthServer/Protos ../server/AuthServer/Protos/*.proto --plugin=protoc-gen-grpc-web=/opt/homebrew/bin/protoc-gen-grpc-web --js_out=import_style=commonjs:src/grpc --grpc-web_out=import_style=typescript,mode=grpcwebtext:src/grpc"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -26,6 +27,8 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "grpc-tools": "^1.13.0",
     "postcss": "^8.5.6",
     "prettier": "^3.6.0",
     "tailwindcss": "^3.4.1",
