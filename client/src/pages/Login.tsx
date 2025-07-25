@@ -1,102 +1,94 @@
-import { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import type { FormProps } from "antd";
+import { Button, Checkbox, Form, Input, Alert } from "antd";
 
-export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+type FieldType = {
+  username?: string;
+  password?: string;
+  remember?: boolean;
+};
+
+const Login: React.FC = () => {
+  const [error, setError] = React.useState<string>("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+    const { username, password } = values;
 
-    // try {
-    //   const res = await login({ username, password });
-    //   if (res.success) {
-    //     navigate("/dashboard");
-    //   } else {
-    //     setError(res.error || "Login failed");
-    //   }
-    // } catch (err) {
-    //   console.error(err);
-    //   setError("Network or server error");
-    // }
-
-     if (username.trim() === "admin" && password.trim() === "123456") {
+    if (username === "admin" && password === "123456") {
       setError("");
-      alert("Login successful!");
       navigate("/dashboard");
     } else {
       setError("Invalid username or password.");
-      }
+    }
   };
 
-   
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
   return (
-    
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-gray-100 flex items-center justify-center px-4">
-
-      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl p-8 transition-all duration-300">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">
-          Welcome Back
-        </h2>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f0f2f5",
+        padding: "2rem",
+      }}
+    >
+      <Form
+        name="login"
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        style={{ maxWidth: 400, width: "100%" }}
+        initialValues={{ remember: true }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
+      >
+        <h2 style={{ textAlign: "center", marginBottom: 24 }}>Login</h2>
 
         {error && (
-          <div className="mb-4 text-sm text-red-600 text-center font-medium">
-            {error}
-          </div>
+          <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
+            <Alert message={error} type="error" showIcon />
+          </Form.Item>
         )}
 
-        <form onSubmit={handleLogin} className="space-y-5">
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2 text-sm"
-              placeholder="admin"
-              required
-            />
-          </div>
+        <Form.Item<FieldType>
+          label="Username"
+          name="username"
+          rules={[{ required: true, message: "Please input your username!" }]}
+        >
+          <Input />
+        </Form.Item>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 px-4 py-2 text-sm"
-              placeholder="123456"
-              required
-            />
-          </div>
+        <Form.Item<FieldType>
+          label="Password"
+          name="password"
+          rules={[{ required: true, message: "Please input your password!" }]}
+        >
+          <Input.Password />
+        </Form.Item>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500 transition"
-          >
+        <Form.Item<FieldType>
+          name="remember"
+          valuePropName="checked"
+          wrapperCol={{ offset: 8, span: 16 }}
+        >
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+          <Button type="primary" htmlType="submit" block>
             Sign In
-          </button>
-        </form>
-
-        <p className="text-center text-sm text-gray-500 mt-6">
-          Hint: Try <span className="font-medium text-gray-800">admin / 123456</span>
-        </p>
-      </div>
+          </Button>
+        </Form.Item>
+      </Form>
     </div>
   );
-}
+};
+
+export default Login;

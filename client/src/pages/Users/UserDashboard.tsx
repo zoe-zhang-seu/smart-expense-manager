@@ -1,68 +1,88 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '../../components/Button';
+import { Table, Typography, Button, Spin, Alert } from 'antd';
+import Paragraph from 'antd/es/skeleton/Paragraph';
 
-interface User{
+const { Title } = Typography;
+
+interface User {
   id: number;
   name: string;
   email: string;
-};
+}
 
 export function UsersDashboard() {
-  const [users, setUsers]     = useState<User[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError]     = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetch('/users.json')
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error('Failed to load users.json');
         return res.json();
       })
-      .then(data => setUsers(data))
-      .catch(err => setError(err.message))
+      .then((data) => setUsers(data))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p>Loading users…</p>;
-  if (error)   return <p className="text-red-500">Error: {error}</p>;
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+      render: (id: number) => <span>{id}</span>,
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (text: string, record: User) => <span>{text}</span>,
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      render: (text: string, record: User) => <span>{text}</span>,
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_: any, record: User) => (
+        <Link to={`/users/${record.id}`}>
+          <Button type="link">View detail</Button>
+        </Link>
+      ),
+    },
+  ];
+
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '2rem' }}>
+        <Spin tip="Loading users…" size="large" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ padding: '2rem' }}>
+        <Alert message="Error" description={error} type="error" showIcon />
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">Users</h2>
-      <table className="min-w-full bg-white border">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="px-4 py-2 border">ID</th>
-            <th className="px-4 py-2 border">Name</th>
-            <th className="px-4 py-2 border">Email</th>
-            <th className="px-4 py-2 border">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(u => (
-            <tr
-              key={u.id}
-              className="hover:bg-gray-100 cursor-pointer"
-            >
-              <td className="px-4 py-2 border">
-                <Link to={`/users/${u.id}`}>{u.id}</Link>
-              </td>
-              <td className="px-4 py-2 border">
-                <Link to={`/users/${u.id}`}>{u.name}</Link>
-              </td>
-              <td className="px-4 py-2 border">
-                <Link to={`/users/${u.id}`}>{u.email}</Link>
-              </td>
-              <td className="px-4 py-2 border">
-                <Button>
-                  <Link to={`/users/${u.id}`}>View detail</Link>
-                </Button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div style={{ padding: 24 }}>
+      <Title level={3}>Users</Title>
+      <Table
+        dataSource={users}
+        columns={columns}
+        rowKey="id"
+        bordered
+        pagination={{ pageSize: 5 }}
+      />
     </div>
   );
 }

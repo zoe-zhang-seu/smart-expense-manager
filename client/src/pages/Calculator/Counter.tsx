@@ -1,16 +1,17 @@
-import { Card } from "../../components/Card";
+import Title from "antd/es/typography/Title";
+import { CustomCard } from "../../components/Card";
 import { CounterButton } from "./CounterButton";
-import { CounterDisplay } from "./CounterDisplay";
 import { CounterProvider } from "./CounterProvider";
+import { CounterDisplay } from "./CounterDisplay";
 
 export function Counter(){
     return (
-        <Card>
+        <CustomCard>
             <CounterProvider>
-                <h1 className="text-3xl font-bold text-gray-800 mb-4">Counter </h1>
-                <CounterDisplay />
+                <Title>Counter </Title>
+                <CounterDisplay/>
                 <CounterButton />
             </CounterProvider>
-        </Card>
+        </CustomCard>
     );
 }

@@ -1,31 +1,45 @@
 import React from 'react';
+import { Button as AntButton } from 'antd';
 
 interface IProps {
-    children: React.ReactNode;
-    variant?: 'primary' | 'secondary' | 'danger';
-    className?: string;
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  children: React.ReactNode;
+  variant?: 'primary' | 'secondary' | 'danger';
+  className?: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  htmlType?: 'button' | 'submit' | 'reset';
+  type?: 'default' | 'link' | 'text';
 }
-export function Button(props: IProps) {
-    const {
-        variant = 'primary',
-    } = props;
 
-    const baseStyles = 'px-4 py-2 rounded-lg font-medium focus:outline-none focus:ring-2';
-    const variants = {
-        primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-        secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-400',
-        danger: 'bg-red-500 text-white hover:bg-red-600 focus:ring-red-400',
-    };
+export function Button({
+  children,
+  variant = 'primary',
+  className,
+  onClick,
+  htmlType = 'button',
+  type,
+}: IProps) {
+  const getButtonProps = () => {
+    switch (variant) {
+      case 'primary':
+        return { type: 'primary' as const };
+      case 'danger':
+        return { danger: true, type: 'primary' as const };
+      case 'secondary':
+        return { type: 'default' as const };
+      default:
+        return { type: 'default' as const };
+    }
+  };
 
-    const variantStyles = variants[variant] || variants.primary;
-
-    return (
-        <button
-            className={`${baseStyles} ${variantStyles} ${props.className}`}
-            {...props}
-        >
-            {props.children}
-        </button>
-    );
+  return (
+    <AntButton
+      {...getButtonProps()}
+      onClick={onClick}
+      className={className}
+      htmlType={htmlType}
+      type={type || getButtonProps().type}
+    >
+      {children}
+    </AntButton>
+  );
 }

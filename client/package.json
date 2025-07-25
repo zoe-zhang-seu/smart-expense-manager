@@ -11,6 +11,7 @@
     "codegen": "mkdir -p src/grpc && protoc -I=../server/AuthServer/Protos ../server/AuthServer/Protos/*.proto --plugin=protoc-gen-grpc-web=/opt/homebrew/bin/protoc-gen-grpc-web --js_out=import_style=commonjs:src/grpc --grpc-web_out=import_style=typescript,mode=grpcwebtext:src/grpc"
   },
   "dependencies": {
+    "antd": "^5.26.6",
     "grpc-web": "^1.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

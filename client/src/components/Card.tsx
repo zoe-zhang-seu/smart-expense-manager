@@ -1,20 +1,15 @@
 import React from 'react';
+import { Card as AntdCard } from 'antd';
 
 interface IProps {
   children: React.ReactNode;
   className?: string;
 }
 
-export function Card(props: IProps) {
+export function CustomCard(props: IProps) {
   return (
-    <div
-      className={
-        `bg-white shadow-lg rounded-lg p-6 ` + 
-        `border border-gray-200 ` +
-        props.className
-      }
-    >
+    <AntdCard title={props.className} bordered={false} style={{ width: 300 }}>
       {props.children}
-    </div>
+    </AntdCard>
   );
 }
