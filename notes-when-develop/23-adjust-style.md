@@ -16,3 +16,22 @@ html,body {
 /* above is to remove the default margin , important which i usually ignore and forget*/
 ```
 
+
+menu in ant design
+
+https://ant.design/components/menu
+```tsx
+<Menu
+        theme={theme}
+        onClick={onClick}
+        style={{ width: 256 }}
+        defaultOpenKeys={['sub1']}
+        selectedKeys={[current]}
+        mode="inline"
+        items={items}
+      />
+
+<Link to={link.to}>{link.label}</Link>
+```
+
+

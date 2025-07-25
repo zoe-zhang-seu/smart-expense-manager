@@ -1,28 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Button } from '../../components/Button';
+import { Card, Typography, Button, Spin, Alert } from 'antd';
+
 
 interface UserType {
   id: string;
   name: string;
   email: string;
-};
+}
 
 export default function User() {
   const { userId } = useParams();
-  const [user, setUser]       = useState<UserType>();
-  const [error, setError]     = useState('');
+  const [user, setUser] = useState<UserType>();
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  //replace it wiht backend API call later
+  const { Title, Text, Paragraph } = Typography;// no need to write Typography.title
+
+
   useEffect(() => {
     setLoading(true);
     fetch('/users.json')
-      .then(res => {
+      .then((res) => {
         if (!res.ok) throw new Error('Failed to load users.json');
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         const found = data.find((u: UserType) => u.id === userId);
         if (!found) {
           setError(`No user found with id ${userId}`);
@@ -30,31 +33,48 @@ export default function User() {
           setUser(found);
         }
       })
-      .catch(err => setError(err.message))
+      .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [userId]);
 
-  if (loading) return <p>Loading user #{userId}…</p>;
-  if (error)   return <p style={{ color: 'red' }}>{error}</p>;
+  if (loading) {
+    return (
+      <div style={{ textAlign: 'center', padding: '2rem' }}>
+        <Spin tip={`Loading user #${userId}...`} size="large" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div style={{ padding: '2rem' }}>
+        <Alert message="Error" description={error} type="error" showIcon />
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4 bg-white shadow rounded">
-      <h2 className="text-xl font-bold mb-2">User Details</h2>
-      {user && (
-        <>
-          <p className="text-gray-700 mb-4">Viewing details for user #{user.id}</p>
-          <p><strong>ID:</strong>    {user.id}</p>
-          <p><strong>Name:</strong>  {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-        </>
-      )}
-
-      <Button
-        onClick={() => navigate(-1)}    // ← go back one entry in history
-        className="mb-4 px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
-      >
-        ← Back
-      </Button>
-    </div>
+    <Card
+      title={<Title level={4}>User Details</Title>}
+      extra={
+        <Button onClick={() => navigate(-1)} type="default">
+          ← Back
+        </Button>
+      }
+      style={{ maxWidth: 600, margin: 'auto', marginTop: 32 }}
+    >
+      <Paragraph>
+        <Text type="secondary">Viewing details for user #{user?.id}</Text>
+      </Paragraph>
+      <Paragraph>
+        <Text strong>ID:</Text> {user?.id}
+      </Paragraph>
+      <Paragraph>
+        <Text strong>Name:</Text> {user?.name}
+      </Paragraph>
+      <Paragraph>
+        <Text strong>Email:</Text> {user?.email}
+      </Paragraph>
+    </Card>
   );
 }

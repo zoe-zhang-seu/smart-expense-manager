@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Layout } from "./Layout";
+import { AppLayout } from "./Layout";
 import { lazy } from "react";
 
 const Login = lazy(() => import('../pages/Login'));
@@ -15,7 +15,7 @@ export const Routers = () => {
   return (
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route element={<Layout />}>
+        <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/expenses" element={<Expenses />} />
           <Route path="/users/:userId" element={<User />} />

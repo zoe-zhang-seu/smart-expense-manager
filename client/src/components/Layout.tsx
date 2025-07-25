@@ -1,32 +1,31 @@
+import { Layout, Menu } from 'antd';
 import { Outlet } from 'react-router-dom';
-import { Header } from './Header';
 import { Footer } from './Footer';
+import { Header } from './Header'; // Keep your custom header if needed
 
-export function Layout() {
+const { Content } = Layout;
+
+export function AppLayout() {
   return (
-    <div className="flex flex-col h-screen">
+    <Layout style={{ minHeight: '100vh' }}>
       <Header
         title="Expense Manager"
         links={[
           { to: '/dashboard', label: 'Dashboard' },
-          { to: '/expenses',  label: 'Expenses' },
+          { to: '/expenses', label: 'Expenses' },
           { to: '/users', label: 'Users' },
-          { to: '/logout',    label: 'Logout' },
+          { to: '/logout', label: 'Logout' },
         ]}
       />
 
-      <div className="flex flex-1">
-        {/* <aside className="w-32 bg-gray-100 p-4">
-          {…nav links, DO I NEED THIS currently?  }
-        </aside>
-        */}
-
-        <main className="flex-1 p-8 overflow-auto">
-          <Outlet />
-          {/* This is where the nested routes will render their components */}
-        </main>
-      </div>
-      <Footer />
-    </div>
+      <Layout>
+        <Layout style={{ padding: '24px' }}>
+          <Content style={{ background: '#fff', padding: 24, borderRadius: 8, flex: 1 }}>
+            <Outlet />
+          </Content>
+          <Footer />
+        </Layout>
+      </Layout>
+    </Layout>
   );
 }
