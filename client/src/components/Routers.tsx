@@ -1,10 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "../pages/Login";
-import Dashboard from "../pages/Dashboard";
-import Expenses from "../pages/Expenses";
-import User from "../pages/Users/User";
 import { Layout } from "./Layout";
-import { UsersDashboard } from "../pages/Users/UserDashboard";
+import { lazy } from "react";
+
+const Login = lazy(() => import('../pages/Login'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Expenses = lazy(() => import('../pages/Expenses'));
+const UsersDashboard = lazy(() =>
+  import('../pages/Users/UserDashboard').then(module => ({ default: module.UsersDashboard }))
+);// only this page is currently dynamic
+const User = lazy(() => import('../pages/Users/User'));
+
 
 export const Routers = () => {
   return (
