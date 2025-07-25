@@ -4,7 +4,7 @@ A full-stack expense tracking system built with **React**, **.NET**, and **Postg
 
 being suggested to write toy project from some senior engineers, so try from simple tasks 
 
-![Demo](public/demo-at-very-begining.gif)
+![Demo](./demo-at-very-begining.gif)
 
 ---
 
