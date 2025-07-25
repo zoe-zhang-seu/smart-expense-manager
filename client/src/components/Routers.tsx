@@ -8,7 +8,6 @@ import { UsersDashboard } from "../pages/Users/UserDashboard";
 
 export const Routers = () => {
   return (
-    <>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route element={<Layout />}>
@@ -18,6 +17,5 @@ export const Routers = () => {
           <Route path="/users" element={<UsersDashboard />} />
         </Route>
       </Routes>
-    </>
   );
 }   
